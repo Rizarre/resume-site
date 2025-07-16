@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sean Rizarre Reyes - Resume Website
 
-## Getting Started
+A modern, responsive resume website built with Next.js 14, TypeScript, Tailwind CSS, and shadcn/ui components.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- 📱 **Fully Responsive** - Works seamlessly on desktop, tablet, and mobile devices
+- 🎨 **Modern Design** - Clean, professional aesthetic with smooth animations
+- 🌙 **Dark Mode** - Toggle between light and dark themes
+- ⚡ **Fast Performance** - Optimized with Next.js 14 and App Router
+- 🎯 **Accessible** - Built with accessibility in mind
+- 🖼️ **Easy Image Management** - Organized image structure for easy updates
+- 📱 **Mobile Navigation** - Collapsible mobile menu for better UX
+- 🚀 **Production Ready** - Optimized for deployment
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Components**: shadcn/ui
+- **Icons**: Lucide React
+- **Animations**: Framer Motion
+- **Font**: Inter (via next/font)
+
+## 🚀 Getting Started
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd sean-resume
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open in browser**
+   ```
+   http://localhost:3000
+   ```
+
+## 📝 Customization
+
+### 1. Personal Information
+Edit the following variables in `src/app/page.tsx`:
+- Name and title
+- Location
+- Bio description
+- Contact information
+
+### 2. Experience & Projects
+Update the `experiences` and `projects` arrays in `src/app/page.tsx` with your own data.
+
+### 3. Skills
+Modify the `skills` array to reflect your technical expertise.
+
+### 4. Images
+- Add your profile photo as `public/images/profile.jpg`
+- Add project screenshots to `public/images/projects/`
+- See `public/images/README.md` for detailed image management guide
+
+### 5. Styling
+- Customize colors in `tailwind.config.ts`
+- Modify component styles in respective files
+- Update CSS variables in `src/app/globals.css`
+
+## 📂 Project Structure
+
+```
+sean-resume/
+├── src/
+│   ├── app/
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   └── components/
+│       ├── ui/              # shadcn/ui components
+│       ├── mobile-nav.tsx   # Mobile navigation
+│       └── theme-toggle.tsx # Dark mode toggle
+├── public/
+│   └── images/              # Image assets
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 Color Scheme
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Primary**: Blue (#2563eb)
+- **Secondary**: Purple (#7c3aed)
+- **Neutral**: Slate grays
+- **Accent**: Various shades for highlights
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📱 Responsive Design
 
-## Learn More
+- **Mobile**: < 768px
+- **Tablet**: 768px - 1024px
+- **Desktop**: > 1024px
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Vercel (Recommended)
+1. Push to GitHub
+2. Connect to Vercel
+3. Deploy automatically
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Netlify
+1. Build the project: `npm run build`
+2. Deploy the `out` folder
 
-## Deploy on Vercel
+### Other Platforms
+The project is compatible with any platform that supports Next.js static exports.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔧 Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+## 📄 License
+
+MIT License - feel free to use this template for your own resume website!
+
+## 🤝 Contributing
+
+Feel free to submit issues and pull requests to improve this template.
+
+---
+
+Made with ❤️ by Sean Rizarre Reyes

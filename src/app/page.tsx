@@ -314,6 +314,7 @@ export default function Home() {
               >
                 <Card className="h-full hover:shadow-xl transition-shadow duration-300">
                   <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-t-lg overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img 
                       src={project.image} 
                       alt={project.title}
@@ -459,7 +460,7 @@ export default function Home() {
               <CardHeader className="text-center">
                 <CardTitle className="text-xl mb-2">Ready to Collaborate?</CardTitle>
                 <CardDescription className="text-lg">
-                  I'm currently available for new opportunities and exciting projects
+                  I&apos;m currently available for new opportunities and exciting projects
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">

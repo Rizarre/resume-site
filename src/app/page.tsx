@@ -69,16 +69,19 @@ export default function Home() {
   const recommendations = [
     {
       name: 'Edward Zuñiga',
+      profile: 'https://www.linkedin.com/in/edward-zu%C3%B1iga-47489a244/',
       occupation: 'L2 Software Engineer',
       message: 'I had the privilege of working alongside Sean Rizarre Reyes at MediaJel, where we both served as Level 2 Software Engineers. Sean stood out not only for his technical proficiency, especially in tag integrations using TypeScript, but also for his remarkable interpersonal skills—he has a genuine talent for communicating difficult or complex matters in a way that\'s honest, clear, and never abrasive.\n\nWhat makes Sean a valuable teammate is his ability to connect with people. Whether it\'s providing technical feedback, collaborating across functions, or helping resolve blockers, he always manages to deliver his point with respect and empathy. That emotional intelligence makes him a natural collaborator, mentor, and leader.\n\nOn the technical side, Sean\'s expertise in handling JavaScript and TypeScript tag integrations was a massive asset to our team. His code is clean, reliable, and thoughtfully structured. He\'s the kind of developer who doesn\'t just solve problems—he anticipates them, designs with scalability in mind, and ensures solutions are easy to maintain.\n\nIf you\'re looking for someone who can bridge the gap between strong engineering and empathetic communication, I can\'t recommend Sean enough. He\'s a standout team player, a quick learner, and someone who brings both heart and technical excellence to the table.'
     },
     {
       name: 'Jesus Crisologo Dimazana',
+      profile: 'https://www.linkedin.com/in/jcdmz/',
       occupation: 'Software Engineer',
       message: 'I had the pleasure of working with Sean on several development projects, and I can confidently say he is one of the most reliable and talented developers I\'ve collaborated with. His technical expertise, particularly in full-stack development, is matched by his problem-solving ability and calm, focused approach under pressure.\n\nSean brings not just clean, maintainable code to the table but also a deep understanding of product requirements and user needs. He consistently goes beyond expectations—whether it\'s optimizing performance, refactoring for scalability, or mentoring junior developers with patience and clarity.\n\nHe\'s a team player through and through, contributing thoughtful ideas during discussions and always willing to help unblock teammates. Anyone would be lucky to have Sean on their engineering team.\n\nHighly recommend him for any development or technical leadership role!'
     },
     {
       name: 'Pacholo Amit',
+      profile: 'https://www.linkedin.com/in/pacholo-amit/',
       occupation: 'Software Engineer | Integrations Manager',
       message: 'I had the privilege of collaborating with Sean on several critical projects, and I can confidently say he is one of the most reliable and dedicated developers I\'ve ever worked with. From the moment he joined our team, Sean demonstrated a natural ability to coordinate efforts, keep everyone aligned, and tackle challenges head-on. He takes every issue seriously—whether it\'s a production bug or an architectural discussion—and works tirelessly until a robust solution is in place.\n\nSean\'s mastery of JavaScript and TypeScript is truly impressive. He consistently crafts clean, maintainable code and elevates our entire codebase by introducing best practices and thoughtful design patterns. As one of our primary software architects, he has led the development of complex features, optimized performance bottlenecks, and ensured our applications scale smoothly. His rapid learning curve means he quickly adapts to new libraries, frameworks, or tools, allowing the team to stay ahead of emerging trends.\n\nBeyond his technical prowess, Sean excels as a team coordinator. He has an uncanny ability to break down complex tasks, delegate responsibilities appropriately, and ensure everyone feels supported and heard. When the team faced tight deadlines, Sean\'s calm yet assertive leadership style helped us navigate ambiguous requirements and deliver high-quality results on schedule. He is always the first to step up during a crisis—whether it\'s gathering the team for an urgent stand-up, staying late to troubleshoot an issue, or mentoring newer developers who need guidance.\n\nOn a personal level, Sean is an absolute joy to work with. His positive attitude, genuine respect for his colleagues, and willingness to lend a helping hand foster a culture of collaboration and trust. He actively encourages open communication, offers constructive feedback during code reviews, and makes time to celebrate team successes. His infectious enthusiasm and strong work ethic have a ripple effect—raising morale and inspiring everyone around him to contribute their best.\n\nIn short, Sean is a fast learner, an exceptional JavaScript/TypeScript expert, and an outstanding team player. Any organization would benefit immensely from his technical talent, leadership skills, and positive spirit. I wholeheartedly recommend Sean for any role that demands technical excellence, strong coordination, and unwavering dedication.'
     }
@@ -378,7 +381,11 @@ export default function Home() {
                         {recommendation.name.split(' ').map(n => n[0]).join('')}
                       </div>
                       <div>
-                        <CardTitle className="text-lg">{recommendation.name}</CardTitle>
+                        <CardTitle className="text-lg">
+                          <a href={recommendation.profile} target="_blank">
+                            {recommendation.name}
+                          </a>
+                        </CardTitle>
                         <CardDescription className="text-blue-600 dark:text-blue-400 font-medium">
                           {recommendation.occupation}
                         </CardDescription>

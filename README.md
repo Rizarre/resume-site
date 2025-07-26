@@ -1,6 +1,6 @@
-# Sean Rizarre Reyes - Resume Website
+# Hi! I'm Sean Rizarre Reyes
 
-A modern, responsive resume website built with Next.js 14, TypeScript, Tailwind CSS, and shadcn/ui components.
+This is my modern, responsive resume website built with Next.js 14, TypeScript, Tailwind CSS, and shadcn/ui components.
 
 ## ✨ Features
 

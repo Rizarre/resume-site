@@ -38,7 +38,16 @@ export default function Home() {
       position: 'L2 Software Engineer',
       duration: '2023 - Present',
       location: 'Manila, Philippines',
-      description: 'Developing and maintaining scalable web applications using modern technologies. Working with cross-functional teams to deliver high-quality software solutions.'
+      description: [
+        'Developed and maintained full-stack features end-to-end, contributing to both front-end interfaces and back-end services that power core product functionality.',
+        'Designed, built, and maintained APIs that support key product features and enable smooth communication between systems.',
+        'Handled software integrations to connect internal platforms with third-party services, ensuring data and workflows move seamlessly between tools.',
+        'Implemented tag integrations to support tracking, analytics, and data collection across web properties.',
+        "Built AI features end-to-end using Vercel's AI SDK, including a context-aware chatbot powered by tools that pull in client-specific information.",
+        'Worked on business intelligence tasks, writing SQL queries and shaping data into structured formats to produce reports that support decision-making.',
+        'Gained hands-on experience with ad technology platforms like Google Ads and Nexxen, along with Salesforce, supporting campaign setup, management, and troubleshooting.',
+        'Collaborated closely with teammates across roles to deliver reliable, maintainable code and improve existing systems over time.',
+      ]
     }
   ];
 
@@ -90,7 +99,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       {/* Header */}
-      <motion.header 
+      <motion.header
         className="fixed top-0 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-50 border-b border-slate-200 dark:border-slate-700"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -98,7 +107,7 @@ export default function Home() {
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
-            <motion.div 
+            <motion.div
               className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
               whileHover={{ scale: 1.05 }}
             >
@@ -113,9 +122,9 @@ export default function Home() {
             </nav>
             <div className="flex items-center gap-2">
               <ThemeToggle />
-              <Button 
-                variant="outline" 
-                size="sm" 
+              <Button
+                variant="outline"
+                size="sm"
                 className="hidden sm:flex items-center gap-2"
                 onClick={() => window.open('/Sean-Rizarre-Reyes-Resume.pdf', '_blank')}
               >
@@ -131,7 +140,7 @@ export default function Home() {
       {/* Hero Section */}
       <section id="about" className="pt-32 pb-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
+          <motion.div
             className="text-center"
             variants={staggerChildren}
             initial="initial"
@@ -139,45 +148,45 @@ export default function Home() {
           >
             <motion.div variants={fadeInUp} className="mb-8">
               <Avatar className="w-32 h-32 mx-auto mb-6 ring-4 ring-blue-100 dark:ring-blue-900">
-                <AvatarImage src="/images/me.png" alt="Sean Rizarre Reyes" />
+                <AvatarImage src="/images/sean.jpg" alt="Sean Rizarre Reyes" />
                 <AvatarFallback className="text-2xl font-semibold bg-gradient-to-br from-blue-500 to-purple-600 text-white">
                   SR
                 </AvatarFallback>
               </Avatar>
             </motion.div>
-            
-            <motion.h1 
+
+            <motion.h1
               variants={fadeInUp}
               className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-slate-900 to-slate-700 dark:from-slate-100 dark:to-slate-300 bg-clip-text text-transparent"
             >
               Sean Rizarre Reyes
             </motion.h1>
-            
-            <motion.p 
+
+            <motion.p
               variants={fadeInUp}
               className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-2"
             >
               Software Engineer
             </motion.p>
-            
-            <motion.div 
+
+            <motion.div
               variants={fadeInUp}
               className="flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400 mb-8"
             >
               <MapPin className="h-5 w-5" />
               <span>Manila, Philippines</span>
             </motion.div>
-            
-            <motion.p 
+
+            <motion.p
               variants={fadeInUp}
               className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8 leading-relaxed"
             >
-              Passionate software engineer with expertise in full-stack development, creating scalable 
-              web applications and innovative solutions. I love turning complex problems into simple, 
+              Passionate software engineer with expertise in full-stack development, creating scalable
+              web applications and innovative solutions. I love turning complex problems into simple,
               beautiful, and intuitive solutions.
             </motion.p>
-            
-            <motion.div 
+
+            <motion.div
               variants={fadeInUp}
               className="flex flex-wrap justify-center gap-4 mb-8"
             >
@@ -201,7 +210,7 @@ export default function Home() {
       {/* Skills Section */}
       <section className="py-20 bg-white dark:bg-slate-900">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
+          <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -213,8 +222,8 @@ export default function Home() {
               Technologies and tools I work with to bring ideas to life
             </p>
           </motion.div>
-          
-          <motion.div 
+
+          <motion.div
             className="flex flex-wrap justify-center gap-3"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -242,7 +251,7 @@ export default function Home() {
       {/* Experience Section */}
       <section id="experience" className="py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
+          <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -254,7 +263,7 @@ export default function Home() {
               My professional journey in software development
             </p>
           </motion.div>
-          
+
           <div className="space-y-8">
             {experiences.map((exp, index) => (
               <motion.div
@@ -280,7 +289,11 @@ export default function Home() {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-slate-600 dark:text-slate-300">{exp.description}</p>
+                    <ul className="list-disc list-outside pl-5 space-y-1 text-slate-600 dark:text-slate-300">
+                      {exp.description.map((bullet, i) => (
+                        <li key={i}>{bullet}</li>
+                      ))}
+                    </ul>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -292,7 +305,7 @@ export default function Home() {
       {/* Projects Section */}
       <section id="projects" className="py-20 bg-white dark:bg-slate-900">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
+          <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -304,7 +317,7 @@ export default function Home() {
               Some of the projects I&apos;ve worked on that showcase my skills and experience
             </p>
           </motion.div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <motion.div
@@ -318,8 +331,8 @@ export default function Home() {
                 <Card className="h-full hover:shadow-xl transition-shadow duration-300">
                   <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-t-lg overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img 
-                      src={project.image} 
+                    <img
+                      src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover"
                     />
@@ -352,7 +365,7 @@ export default function Home() {
       {/* Recommendations Section */}
       <section id="recommendations" className="py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
+          <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -364,7 +377,7 @@ export default function Home() {
               What my colleagues say about working with me
             </p>
           </motion.div>
-          
+
           <div className="grid md:grid-cols-1 lg:grid-cols-1 gap-8 max-w-4xl mx-auto">
             {recommendations.map((recommendation, index) => (
               <motion.div
@@ -411,7 +424,7 @@ export default function Home() {
       {/* Contact Section */}
       <section id="contact" className="py-20 bg-white dark:bg-slate-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
+          <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -423,8 +436,8 @@ export default function Home() {
               I&apos;m always open to discussing new opportunities and interesting projects
             </p>
           </motion.div>
-          
-          <motion.div 
+
+          <motion.div
             className="grid md:grid-cols-2 gap-12"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -441,7 +454,7 @@ export default function Home() {
                   <p className="text-slate-600 dark:text-slate-300">seanrizarre.reyes@gmail.com</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
                   <Phone className="h-6 w-6 text-blue-600 dark:text-blue-400" />
@@ -451,7 +464,7 @@ export default function Home() {
                   <p className="text-slate-600 dark:text-slate-300">+63 917 866 8799</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
                   <MapPin className="h-6 w-6 text-blue-600 dark:text-blue-400" />
@@ -462,7 +475,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            
+
             <Card className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-blue-200 dark:border-blue-800">
               <CardHeader className="text-center">
                 <CardTitle className="text-xl mb-2">Ready to Collaborate?</CardTitle>
@@ -473,10 +486,10 @@ export default function Home() {
               <CardContent className="space-y-6">
                 <div className="text-center space-y-4">
                   <p className="text-slate-600 dark:text-slate-300">
-                    L2 Software Engineer with expertise in full-stack development, 
+                    L2 Software Engineer with expertise in full-stack development,
                     specializing in JavaScript, TypeScript, and modern web technologies.
                   </p>
-                  
+
                   <div className="flex flex-wrap justify-center gap-3 py-4">
                     <Badge variant="secondary" className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
                       Full-Stack Development
@@ -489,30 +502,30 @@ export default function Home() {
                     </Badge>
                   </div>
                 </div>
-                
+
                 <Separator />
-                
+
                 <div className="space-y-4">
-                  <Button 
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white" 
+                  <Button
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                     size="lg"
                     onClick={() => window.open('/Sean-Rizarre-Reyes-Resume.pdf', '_blank')}
                   >
                     <Download className="h-5 w-5 mr-2" />
                     Download Resume
                   </Button>
-                  
+
                   <div className="flex gap-3">
-                    <Button 
-                      variant="outline" 
-                      className="flex-1" 
+                    <Button
+                      variant="outline"
+                      className="flex-1"
                       onClick={() => window.open('https://github.com/Rizarre', '_blank')}
                     >
                       <Github className="h-4 w-4 mr-2" />
                       GitHub
                     </Button>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       className="flex-1"
                       onClick={() => window.open('https://www.linkedin.com/in/seanrizarre/', '_blank')}
                     >
@@ -520,9 +533,9 @@ export default function Home() {
                       LinkedIn
                     </Button>
                   </div>
-                  
-                  <Button 
-                    variant="outline" 
+
+                  <Button
+                    variant="outline"
                     className="w-full"
                     onClick={() => window.location.href = 'mailto:seanrizarre.reyes@gmail.com'}
                   >

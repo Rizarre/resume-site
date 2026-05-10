@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, MapPin, Phone, Download, ExternalLink } from 'lucide-react';
+import { motion, useScroll, useSpring } from 'framer-motion';
+import { Github, Linkedin, Mail, MapPin, Phone, FileText, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -9,18 +9,22 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { MobileNav } from '@/components/mobile-nav';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { MagneticButton } from '@/components/magnetic-button';
 
 export default function Home() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
   const fadeInUp = {
-    initial: { opacity: 0, y: 60 },
+    initial: { opacity: 0, y: 40 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
+    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }
   };
 
   const staggerChildren = {
     animate: {
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.12
       }
     }
   };
@@ -37,7 +41,7 @@ export default function Home() {
       company: 'MediaJel',
       position: 'L2 Software Engineer',
       duration: '2023 - Present',
-      location: 'Manila, Philippines',
+      location: 'Makati, Philippines',
       description: [
         'Developed and maintained full-stack features end-to-end, contributing to both front-end interfaces and back-end services that power core product functionality.',
         'Designed, built, and maintained APIs that support key product features and enable smooth communication between systems.',
@@ -97,10 +101,16 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-[#0c1525] dark:to-[#101d30]">
+      {/* Scroll progress bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 origin-left z-[60]"
+        style={{ scaleX }}
+      />
+
       {/* Header */}
       <motion.header
-        className="fixed top-0 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-50 border-b border-slate-200 dark:border-slate-700"
+        className="fixed top-0 w-full bg-white/80 dark:bg-[#0c1525]/90 backdrop-blur-md z-50 border-b border-slate-200 dark:border-blue-900/60"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
@@ -128,7 +138,7 @@ export default function Home() {
                 className="hidden sm:flex items-center gap-2"
                 onClick={() => window.open('/Sean-Rizarre-Reyes-Resume.pdf', '_blank')}
               >
-                <Download className="h-4 w-4" />
+                <FileText className="h-4 w-4" />
                 Resume
               </Button>
               <MobileNav />
@@ -138,21 +148,37 @@ export default function Home() {
       </motion.header>
 
       {/* Hero Section */}
-      <section id="about" className="pt-32 pb-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="about" className="pt-32 pb-20 relative overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0 dot-grid" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-blue-400/10 dark:bg-blue-500/20 rounded-full blur-3xl pointer-events-none orb-float" />
+        <div className="absolute top-1/3 right-1/4 w-[350px] h-[350px] bg-purple-400/10 dark:bg-blue-600/15 rounded-full blur-3xl pointer-events-none orb-float-slow" />
+        <div className="absolute bottom-0 left-1/4 w-[300px] h-[300px] bg-pink-400/8 dark:bg-blue-400/12 rounded-full blur-3xl pointer-events-none orb-float" />
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             className="text-center"
             variants={staggerChildren}
             initial="initial"
             animate="animate"
           >
-            <motion.div variants={fadeInUp} className="mb-8">
-              <Avatar className="w-32 h-32 mx-auto mb-6 ring-4 ring-blue-100 dark:ring-blue-900">
-                <AvatarImage src="/images/sean.jpg" alt="Sean Rizarre Reyes" />
-                <AvatarFallback className="text-2xl font-semibold bg-gradient-to-br from-blue-500 to-purple-600 text-white">
-                  SR
-                </AvatarFallback>
-              </Avatar>
+            <motion.div variants={fadeInUp} className="mb-8 flex justify-center">
+              <MagneticButton
+                className="w-32 h-32"
+                innerStrength={0}
+                style={{
+                  // box-shadow follows both the spring translation AND the deformed
+                  // border-radius automatically — ring + glow in one declaration
+                  boxShadow: '0 0 0 4px white, 0 0 0 5px rgba(99,102,241,0.35), 0 0 40px 12px rgba(99,102,241,0.25)',
+                }}
+              >
+                <Avatar className="w-32 h-32 rounded-none">
+                  <AvatarImage src="/images/sean.jpg" alt="Sean Rizarre Reyes" />
+                  <AvatarFallback className="text-2xl font-semibold bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-none">
+                    SR
+                  </AvatarFallback>
+                </Avatar>
+              </MagneticButton>
             </motion.div>
 
             <motion.h1
@@ -174,41 +200,60 @@ export default function Home() {
               className="flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400 mb-8"
             >
               <MapPin className="h-5 w-5" />
-              <span>Manila, Philippines</span>
+              <span>Makati, Philippines</span>
             </motion.div>
 
             <motion.p
               variants={fadeInUp}
               className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8 leading-relaxed"
             >
-              Passionate software engineer with expertise in full-stack development, creating scalable
-              web applications and innovative solutions. I love turning complex problems into simple,
-              beautiful, and intuitive solutions.
+              Passionate software engineer with experience in full-stack development, API design, software integration, and building AI-powered features. I love turning complex problems into simple, beautiful, and intuitive solutions.
             </motion.p>
 
             <motion.div
               variants={fadeInUp}
               className="flex flex-wrap justify-center gap-4 mb-8"
             >
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                <Mail className="h-4 w-4 mr-2" />
-                Get in Touch
-              </Button>
-              <Button variant="outline" onClick={() => window.open('https://github.com/Rizarre', '_blank')}>
-                <Github className="h-4 w-4 mr-2" />
-                GitHub
-              </Button>
-              <Button variant="outline" onClick={() => window.open('https://www.linkedin.com/in/seanrizarre/', '_blank')}>
-                <Linkedin className="h-4 w-4 mr-2" />
-                LinkedIn
-              </Button>
+              <MagneticButton>
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-none">
+                  <Mail className="h-4 w-4 mr-2" />
+                  Get in Touch
+                </Button>
+              </MagneticButton>
+              <MagneticButton>
+                <Button variant="outline" className="rounded-none" onClick={() => window.open('https://github.com/Rizarre', '_blank')}>
+                  <Github className="h-4 w-4 mr-2" />
+                  GitHub
+                </Button>
+              </MagneticButton>
+              <MagneticButton>
+                <Button variant="outline" className="rounded-none" onClick={() => window.open('https://www.linkedin.com/in/seanrizarre/', '_blank')}>
+                  <Linkedin className="h-4 w-4 mr-2" />
+                  LinkedIn
+                </Button>
+              </MagneticButton>
             </motion.div>
+          </motion.div>
+
+          {/* Scroll indicator */}
+          <motion.div
+            className="flex flex-col items-center mt-12 text-slate-400 dark:text-slate-500"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+          >
+            <span className="text-xs tracking-widest uppercase mb-2">Scroll</span>
+            <motion.div
+              className="w-px h-10 bg-gradient-to-b from-slate-400 to-transparent"
+              animate={{ scaleY: [1, 0.4, 1], opacity: [1, 0.3, 1] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+            />
           </motion.div>
         </div>
       </section>
 
       {/* Skills Section */}
-      <section className="py-20 bg-white dark:bg-slate-900">
+      <section className="py-20 bg-white dark:bg-[#111c2e]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-16"
@@ -217,7 +262,8 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold mb-4">Skills & Technologies</h2>
+            <h2 className="text-3xl font-bold mb-3">Skills & Technologies</h2>
+            <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4" />
             <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
               Technologies and tools I work with to bring ideas to life
             </p>
@@ -258,52 +304,74 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold mb-4">Experience</h2>
+            <h2 className="text-3xl font-bold mb-3">Experience</h2>
+            <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4" />
             <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
               My professional journey in software development
             </p>
           </motion.div>
 
-          <div className="space-y-8">
-            {experiences.map((exp, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Card className="hover:shadow-lg transition-shadow duration-300">
-                  <CardHeader>
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                      <div>
-                        <CardTitle className="text-xl mb-1">{exp.position}</CardTitle>
-                        <CardDescription className="text-lg font-medium text-blue-600 dark:text-blue-400">
-                          {exp.company}
-                        </CardDescription>
+          <div className="relative">
+            {/* Vertical timeline line */}
+            <div className="absolute left-6 top-2 bottom-2 w-px bg-gradient-to-b from-blue-500 via-purple-500 to-transparent hidden md:block" />
+
+            <div className="space-y-8">
+              {experiences.map((exp, index) => (
+                <motion.div
+                  key={index}
+                  className="relative md:pl-20"
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  viewport={{ once: true }}
+                >
+                  {/* Timeline dot */}
+                  <div className="absolute left-3.5 top-6 w-5 h-5 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 ring-4 ring-white dark:ring-black hidden md:flex items-center justify-center z-10">
+                    <div className="w-2 h-2 rounded-full bg-white" />
+                  </div>
+
+                  <Card className="hover:shadow-xl transition-all duration-300 border border-slate-200/80 dark:border-blue-900/40 hover:border-blue-200 dark:hover:border-blue-800 group">
+                    <CardHeader>
+                      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
+                        <div>
+                          <CardTitle className="text-xl mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            {exp.position}
+                          </CardTitle>
+                          <CardDescription className="text-base font-semibold text-blue-600 dark:text-blue-400">
+                            {exp.company}
+                          </CardDescription>
+                        </div>
+                        <div className="flex flex-col md:items-end gap-1 shrink-0">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                            {exp.duration}
+                          </span>
+                          <span className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                            <MapPin className="h-3 w-3" />
+                            {exp.location}
+                          </span>
+                        </div>
                       </div>
-                      <div className="text-right mt-2 md:mt-0">
-                        <p className="text-sm text-slate-500 dark:text-slate-400">{exp.duration}</p>
-                        <p className="text-sm text-slate-500 dark:text-slate-400">{exp.location}</p>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="list-disc list-outside pl-5 space-y-1 text-slate-600 dark:text-slate-300">
-                      {exp.description.map((bullet, i) => (
-                        <li key={i}>{bullet}</li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-2 text-slate-600 dark:text-slate-300">
+                        {exp.description.map((bullet, i) => (
+                          <li key={i} className="flex gap-3">
+                            <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 dark:bg-blue-500 shrink-0" />
+                            <span className="text-sm leading-relaxed">{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 bg-white dark:bg-slate-900">
+      <section id="projects" className="py-20 bg-white dark:bg-[#111c2e]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-16"
@@ -312,7 +380,8 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold mb-4">Featured Projects</h2>
+            <h2 className="text-3xl font-bold mb-3">Featured Projects</h2>
+            <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4" />
             <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
               Some of the projects I&apos;ve worked on that showcase my skills and experience
             </p>
@@ -322,20 +391,21 @@ export default function Home() {
             {projects.map((project, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.6, delay: index * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ y: -6 }}
               >
-                <Card className="h-full hover:shadow-xl transition-shadow duration-300">
-                  <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-t-lg overflow-hidden">
+                <Card className="h-full hover:shadow-2xl transition-all duration-300 border border-slate-200/80 dark:border-blue-900/40 hover:border-blue-200 dark:hover:border-blue-800 group overflow-hidden">
+                  <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-950 dark:to-blue-900 overflow-hidden relative">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   <CardHeader>
                     <CardTitle className="flex items-center justify-between">
@@ -372,7 +442,8 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold mb-4">Recommendations</h2>
+            <h2 className="text-3xl font-bold mb-3">Recommendations</h2>
+            <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4" />
             <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
               What my colleagues say about working with me
             </p>
@@ -422,7 +493,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-white dark:bg-slate-900">
+      <section id="contact" className="py-20 bg-white dark:bg-[#111c2e]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-16"
@@ -431,7 +502,8 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold mb-4">Let&apos;s Work Together</h2>
+            <h2 className="text-3xl font-bold mb-3">Let&apos;s Work Together</h2>
+            <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4" />
             <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
               I&apos;m always open to discussing new opportunities and interesting projects
             </p>
@@ -471,12 +543,12 @@ export default function Home() {
                 </div>
                 <div>
                   <h3 className="font-semibold">Location</h3>
-                  <p className="text-slate-600 dark:text-slate-300">Manila, Philippines</p>
+                  <p className="text-slate-600 dark:text-slate-300">Makati, Philippines</p>
                 </div>
               </div>
             </div>
 
-            <Card className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-blue-200 dark:border-blue-800">
+            <Card className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-blue-950/50 border-blue-200 dark:border-blue-800">
               <CardHeader className="text-center">
                 <CardTitle className="text-xl mb-2">Ready to Collaborate?</CardTitle>
                 <CardDescription className="text-lg">
@@ -494,7 +566,7 @@ export default function Home() {
                     <Badge variant="secondary" className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
                       Full-Stack Development
                     </Badge>
-                    <Badge variant="secondary" className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200">
+                    <Badge variant="secondary" className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
                       Team Leadership
                     </Badge>
                     <Badge variant="secondary" className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
@@ -511,8 +583,8 @@ export default function Home() {
                     size="lg"
                     onClick={() => window.open('/Sean-Rizarre-Reyes-Resume.pdf', '_blank')}
                   >
-                    <Download className="h-5 w-5 mr-2" />
-                    Download Resume
+                    <FileText className="h-5 w-5 mr-2" />
+                    View Resume
                   </Button>
 
                   <div className="flex gap-3">
@@ -550,7 +622,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-white py-12">
+      <footer className="bg-[#09111e] text-white py-12 border-t border-blue-900/40">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-center md:text-left mb-4 md:mb-0">
@@ -569,7 +641,7 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <Separator className="my-8 bg-slate-700" />
+          <Separator className="my-8 bg-blue-900/50" />
           <div className="text-center text-slate-400">
             <p>&copy; 2024 Sean Rizarre Reyes. All rights reserved.</p>
           </div>

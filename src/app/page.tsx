@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { Github, Linkedin, Mail, MapPin, Phone, FileText, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Mail, MapPin, Phone, FileText, ExternalLink, Code2, Layout, Server, Database, Cloud, HardDrive, GraduationCap, Award, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -29,11 +29,45 @@ export default function Home() {
     }
   };
 
-  const skills = [
-    'JavaScript', 'TypeScript', 'Next.js', 'Node.js', 'HTML', 'Vue.js', 'CSS',
-    'React', 'Tailwind', 'Bootstrap', 'Express', 'NestJS', 'GraphQL', 'React Native',
-    'MongoDB', 'SQLite', 'PostgreSQL', 'MySQL', 'Snowflake', 'ClickHouse',
-    'AWS', 'Docker', 'Git', 'Firebase', 'Laravel', 'Postman', 'PHP', 'Java', 'Python'
+  // `span` drives the bento layout on a 6-column grid (lg); featured tiles use the accent glass.
+  const skillCategories = [
+    {
+      title: 'Languages',
+      icon: Code2,
+      span: 'lg:col-span-2',
+      skills: ['JavaScript', 'TypeScript', 'Python', 'Java', 'PHP']
+    },
+    {
+      title: 'Frontend',
+      icon: Layout,
+      span: 'lg:col-span-4',
+      skills: ['React', 'Next.js', 'Vue.js', 'React Native', 'Tailwind', 'Bootstrap', 'HTML', 'CSS']
+    },
+    {
+      title: 'Backend & APIs',
+      icon: Server,
+      span: 'lg:col-span-3',
+      skills: ['Node.js', 'Express', 'NestJS', 'GraphQL', 'Laravel', 'Firebase']
+    },
+    {
+      title: 'Databases',
+      icon: Database,
+      span: 'lg:col-span-3',
+      skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'SQLite', 'Snowflake', 'ClickHouse']
+    },
+    {
+      title: 'DevOps & Cloud',
+      icon: Cloud,
+      span: 'lg:col-span-2',
+      skills: ['AWS', 'Docker', 'Git', 'Postman']
+    },
+    {
+      title: 'Homelab & Self-Hosting',
+      icon: HardDrive,
+      span: 'lg:col-span-4',
+      featured: true,
+      skills: ['Proxmox (VMs)', 'TrueNAS', 'ZFS RAID1 Pool', 'Self-Hosted Apps', 'Networking']
+    }
   ];
 
   const experiences = [
@@ -125,7 +159,9 @@ export default function Home() {
             </motion.div>
             <nav className="hidden md:flex space-x-8">
               <a href="#about" className="text-slate-600 hover:text-blue-600 transition-colors">About</a>
+              <a href="#skills" className="text-slate-600 hover:text-blue-600 transition-colors">Skills</a>
               <a href="#experience" className="text-slate-600 hover:text-blue-600 transition-colors">Experience</a>
+              <a href="#education" className="text-slate-600 hover:text-blue-600 transition-colors">Education</a>
               <a href="#projects" className="text-slate-600 hover:text-blue-600 transition-colors">Projects</a>
               <a href="#recommendations" className="text-slate-600 hover:text-blue-600 transition-colors">Recommendations</a>
               <a href="#contact" className="text-slate-600 hover:text-blue-600 transition-colors">Contact</a>
@@ -253,8 +289,12 @@ export default function Home() {
       </section>
 
       {/* Skills Section */}
-      <section className="py-20 bg-white dark:bg-[#111c2e]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="skills" className="py-20 bg-slate-50 dark:bg-[#0d1728] relative overflow-hidden">
+        {/* Decorative blobs give the frosted tiles something to refract */}
+        <div className="blob w-[500px] h-[500px] bg-blue-400/20 dark:bg-blue-600/20 -top-20 -left-20" />
+        <div className="blob w-[450px] h-[450px] bg-purple-400/15 dark:bg-purple-700/15 bottom-0 right-0" />
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -269,34 +309,49 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <motion.div
-            className="flex flex-wrap justify-center gap-3"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            {skills.map((skill, index) => (
-              <motion.div
-                key={skill}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <Badge variant="secondary" className="text-sm py-2 px-4 hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors">
-                  {skill}
-                </Badge>
-              </motion.div>
-            ))}
-          </motion.div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5 auto-rows-fr">
+            {skillCategories.map((category, index) => {
+              const Icon = category.icon;
+              return (
+                <motion.div
+                  key={category.title}
+                  className={`${category.span} ${category.featured ? 'sm:col-span-2' : ''}`}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -5 }}
+                >
+                  <div className={`h-full rounded-2xl p-6 transition-all duration-300 group ${category.featured ? 'glass-accent hover:shadow-2xl hover:shadow-blue-500/20' : 'glass hover:shadow-2xl'}`}>
+                    <div className="flex items-center gap-3 mb-5">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shrink-0 shadow-md shadow-blue-500/25 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                        <Icon className="h-5 w-5 text-white" />
+                      </div>
+                      <h3 className="text-lg font-semibold">{category.title}</h3>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {category.skills.map((skill) => (
+                        <Badge
+                          key={skill}
+                          variant="secondary"
+                          className="text-sm py-1.5 px-3 bg-white/60 dark:bg-white/5 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-slate-200/60 dark:border-white/10 transition-colors"
+                        >
+                          {skill}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="experience" className="py-20 relative overflow-hidden">
+        <div className="blob w-[420px] h-[420px] bg-blue-400/15 dark:bg-blue-600/18 top-20 -left-20" />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -330,7 +385,7 @@ export default function Home() {
                     <div className="w-2 h-2 rounded-full bg-white" />
                   </div>
 
-                  <Card className="hover:shadow-xl transition-all duration-300 border border-slate-200/80 dark:border-blue-900/40 hover:border-blue-200 dark:hover:border-blue-800 group">
+                  <Card className="glass hover:shadow-2xl transition-all duration-300 group">
                     <CardHeader>
                       <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
                         <div>
@@ -370,9 +425,103 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Education Section */}
+      <section id="education" className="py-20 relative overflow-hidden">
+        <div className="blob w-[420px] h-[420px] bg-purple-400/15 dark:bg-purple-700/18 top-10 -right-16" />
+        <div className="blob w-[380px] h-[380px] bg-blue-400/15 dark:bg-blue-600/18 bottom-0 -left-16" />
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl font-bold mb-3">Education</h2>
+            <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4" />
+            <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+              Where I built the foundation for my career
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 lg:grid-cols-3 gap-5 auto-rows-fr"
+            variants={staggerChildren}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            {/* Main degree tile */}
+            <motion.div variants={fadeInUp} className="lg:col-span-2 lg:row-span-2" whileHover={{ y: -5 }}>
+              <div className="glass h-full rounded-2xl p-8 flex flex-col justify-between hover:shadow-2xl transition-all duration-300 group">
+                <div>
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/25 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
+                      <GraduationCap className="h-7 w-7 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold leading-tight">BS in Information Technology</h3>
+                      <p className="text-blue-600 dark:text-blue-400 font-semibold mt-1">University of Santo Tomas</p>
+                      <span className="inline-flex items-center gap-1.5 mt-2 px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/50 dark:bg-white/10 border border-slate-200/70 dark:border-white/15 text-slate-600 dark:text-slate-300">
+                        <GraduationCap className="h-3 w-3" />
+                        Graduated 2023
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                    Specialized in <span className="font-semibold text-slate-800 dark:text-slate-100">Web &amp; Mobile Development</span>,
+                    building a strong foundation in software engineering, full-stack web technologies, and mobile
+                    application development that I carry into my professional work today.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2 mt-6">
+                  {['Web Development', 'Mobile Development', 'Software Engineering', 'Databases'].map((focus) => (
+                    <Badge
+                      key={focus}
+                      variant="secondary"
+                      className="text-sm py-1.5 px-3 bg-white/60 dark:bg-white/5 border border-slate-200/60 dark:border-white/10"
+                    >
+                      {focus}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* GWA stat tile */}
+            <motion.div variants={fadeInUp} whileHover={{ y: -5 }}>
+              <div className="glass-accent h-full rounded-2xl p-6 flex flex-col justify-center items-center text-center hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 group">
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-md shadow-blue-500/25 mb-3 group-hover:scale-110 transition-transform duration-300">
+                  <Award className="h-6 w-6 text-white" />
+                </div>
+                <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  1.60
+                </div>
+                <p className="font-semibold mt-1">General Weighted Average</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">1.00 highest · Philippine scale</p>
+              </div>
+            </motion.div>
+
+            {/* Specialization tile */}
+            <motion.div variants={fadeInUp} whileHover={{ y: -5 }}>
+              <div className="glass h-full rounded-2xl p-6 flex flex-col justify-center hover:shadow-2xl transition-all duration-300 group">
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-md shadow-blue-500/25 mb-3 group-hover:scale-110 transition-transform duration-300">
+                  <Smartphone className="h-6 w-6 text-white" />
+                </div>
+                <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-1">Specialization</p>
+                <p className="text-lg font-bold leading-tight">Web &amp; Mobile Development</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Projects Section */}
-      <section id="projects" className="py-20 bg-white dark:bg-[#111c2e]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="projects" className="py-20 bg-slate-50 dark:bg-[#0d1728] relative overflow-hidden">
+        <div className="blob w-[480px] h-[480px] bg-purple-400/15 dark:bg-purple-700/15 -top-20 right-0" />
+        <div className="blob w-[400px] h-[400px] bg-blue-400/15 dark:bg-blue-600/18 bottom-0 -left-20" />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -397,7 +546,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 whileHover={{ y: -6 }}
               >
-                <Card className="h-full hover:shadow-2xl transition-all duration-300 border border-slate-200/80 dark:border-blue-900/40 hover:border-blue-200 dark:hover:border-blue-800 group overflow-hidden">
+                <Card className="glass h-full hover:shadow-2xl transition-all duration-300 group overflow-hidden">
                   <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-950 dark:to-blue-900 overflow-hidden relative">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -433,8 +582,9 @@ export default function Home() {
       </section>
 
       {/* Recommendations Section */}
-      <section id="recommendations" className="py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="recommendations" className="py-20 relative overflow-hidden">
+        <div className="blob w-[440px] h-[440px] bg-blue-400/12 dark:bg-blue-600/15 top-10 right-0" />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -458,7 +608,7 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="h-full hover:shadow-xl transition-shadow duration-300">
+                <Card className="glass h-full hover:shadow-2xl transition-all duration-300">
                   <CardHeader>
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-lg">
@@ -493,8 +643,10 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-white dark:bg-[#111c2e]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="contact" className="py-20 bg-slate-50 dark:bg-[#0d1728] relative overflow-hidden">
+        <div className="blob w-[460px] h-[460px] bg-blue-400/18 dark:bg-blue-600/20 -top-16 left-0" />
+        <div className="blob w-[400px] h-[400px] bg-purple-400/15 dark:bg-purple-700/15 bottom-0 right-0" />
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -548,7 +700,7 @@ export default function Home() {
               </div>
             </div>
 
-            <Card className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-blue-950/50 border-blue-200 dark:border-blue-800">
+            <Card className="glass-accent">
               <CardHeader className="text-center">
                 <CardTitle className="text-xl mb-2">Ready to Collaborate?</CardTitle>
                 <CardDescription className="text-lg">
@@ -643,7 +795,7 @@ export default function Home() {
           </div>
           <Separator className="my-8 bg-blue-900/50" />
           <div className="text-center text-slate-400">
-            <p>&copy; 2024 Sean Rizarre Reyes. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Sean Rizarre Reyes. All rights reserved.</p>
           </div>
         </div>
       </footer>

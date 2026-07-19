@@ -10,8 +10,11 @@ export function MobileNav() {
 
   const menuItems = [
     { href: '#about', label: 'About' },
+    { href: '#skills', label: 'Skills' },
     { href: '#experience', label: 'Experience' },
+    { href: '#education', label: 'Education' },
     { href: '#projects', label: 'Projects' },
+    { href: '#recommendations', label: 'Recommendations' },
     { href: '#contact', label: 'Contact' },
   ];
 

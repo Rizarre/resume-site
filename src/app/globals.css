@@ -185,3 +185,14 @@
   filter: blur(80px);
   pointer-events: none;
 }
+
+/* ── Panning gradient (hovered carousel card) ── */
+@keyframes gradient-pan {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+.gradient-pan {
+  background-size: 200% 200%;
+  animation: gradient-pan 4s ease infinite;
+}

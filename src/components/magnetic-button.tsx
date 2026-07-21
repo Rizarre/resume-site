@@ -17,6 +17,8 @@ interface MagneticButtonProps {
    * Default: 0.28
    */
   innerStrength?: number;
+  /** Resting border-radius in px. Default 9999 (full pill). */
+  baseRadius?: number;
 }
 
 /**
@@ -35,6 +37,7 @@ export function MagneticButton({
   detectionRadius = 110,
   strength = 0.42,
   innerStrength = 0.28,
+  baseRadius = 9999,
 }: MagneticButtonProps) {
   const outerRef = useRef<HTMLDivElement>(null);
 
@@ -85,8 +88,8 @@ export function MagneticButton({
           // Dot product: how much does cursor direction point at this corner?
           const alignment = (nx * ex + ny * ey) / Math.SQRT2; // -1..1
           const pull = Math.max(0, alignment) * maxPull;
-          // Lerp from 9999 (fully pill) → 4 (sharp point)
-          return Math.round(9999 + (4 - 9999) * pull);
+          // Lerp from the resting radius → 4 (sharp point)
+          return Math.round(baseRadius + (4 - baseRadius) * pull);
         });
 
         // Apply directly to DOM — no re-render, no lag
@@ -94,13 +97,13 @@ export function MagneticButton({
       } else {
         x.set(0);  y.set(0);
         ix.set(0); iy.set(0);
-        el.style.borderRadius = '9999px';
+        el.style.borderRadius = `${baseRadius}px`;
       }
     };
 
     window.addEventListener('mousemove', onMove);
     return () => window.removeEventListener('mousemove', onMove);
-  }, [x, y, ix, iy, strength, innerStrength, detectionRadius]);
+  }, [x, y, ix, iy, strength, innerStrength, detectionRadius, baseRadius]);
 
   return (
     <motion.div
@@ -110,7 +113,7 @@ export function MagneticButton({
         x: sx,
         y: sy,
         // Initial shape; JS will take over from here
-        borderRadius: '9999px',
+        borderRadius: `${baseRadius}px`,
         // Smooth the border-radius transitions between frames
         transition: 'border-radius 90ms ease-out',
         willChange: 'transform, border-radius',

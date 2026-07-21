@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { Github, Linkedin, Mail, MapPin, Phone, FileText, ExternalLink, Code2, Layout, Server, Database, Cloud, HardDrive, GraduationCap, Award, Smartphone } from 'lucide-react';
+import { Github, Linkedin, Mail, MapPin, Phone, FileText, Code2, Layout, Server, Database, Cloud, HardDrive, GraduationCap, Award, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -10,6 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { MobileNav } from '@/components/mobile-nav';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { MagneticButton } from '@/components/magnetic-button';
+import { ProjectCarousel } from '@/components/project-carousel';
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
@@ -95,7 +96,8 @@ export default function Home() {
       description: 'A simple and intuitive budget management application built with React Native and Expo, designed to help users stay on top of their finances throughout the year.',
       tech: ['TypeScript', 'SQLite', 'React Native', 'Expo'],
       link: 'https://github.com/Rizarre/Stinjy-Budget-Tracker',
-      image: '/images/projects/stinjy.png'
+      image: '/images/projects/stinjy.png',
+      fit: 'contain' as const
     },
     {
       title: 'ASEA Online Platform',
@@ -109,7 +111,8 @@ export default function Home() {
       description: 'An Android Mobile Application that utilizes web scraping to compare market prices on markets to see which location has the cheapest product.',
       tech: ['Python', 'Java', 'Android'],
       link: 'https://github.com/Rizarre/SurePrice-Mobile-Prog',
-      image: '/images/projects/sureprice.png'
+      image: '/images/projects/sureprice.png',
+      fit: 'contain' as const
     }
   ];
 
@@ -203,7 +206,7 @@ export default function Home() {
           >
             <motion.div variants={fadeInUp} className="mb-8 flex justify-center">
               <MagneticButton
-                className="w-32 h-32"
+                className="w-48 h-48"
                 innerStrength={0}
                 style={{
                   // box-shadow follows both the spring translation AND the deformed
@@ -211,9 +214,9 @@ export default function Home() {
                   boxShadow: '0 0 0 4px white, 0 0 0 5px rgba(99,102,241,0.35), 0 0 40px 12px rgba(99,102,241,0.25)',
                 }}
               >
-                <Avatar className="w-32 h-32 rounded-none">
+                <Avatar className="w-48 h-48 rounded-none">
                   <AvatarImage src="/images/sean.jpg" alt="Sean Rizarre Reyes" />
-                  <AvatarFallback className="text-2xl font-semibold bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-none">
+                  <AvatarFallback className="text-4xl font-semibold bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-none">
                     SR
                   </AvatarFallback>
                 </Avatar>
@@ -253,21 +256,35 @@ export default function Home() {
               variants={fadeInUp}
               className="flex flex-wrap justify-center gap-4 mb-8"
             >
-              <MagneticButton>
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-none">
-                  <Mail className="h-4 w-4 mr-2" />
+              <MagneticButton baseRadius={28}>
+                <Button
+                  className="group relative overflow-hidden h-16 px-14 has-[>svg]:px-14 gap-3 text-base bg-blue-600 text-white rounded-none transition-all duration-300 hover:bg-violet-600 hover:shadow-[0_0_32px_-4px] hover:shadow-violet-500/70 active:scale-[0.96]"
+                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                  <Mail className="size-5 transition-transform duration-300 group-hover:-rotate-12 group-hover:scale-110" />
                   Get in Touch
                 </Button>
               </MagneticButton>
-              <MagneticButton>
-                <Button variant="outline" className="rounded-none" onClick={() => window.open('https://github.com/Rizarre', '_blank')}>
-                  <Github className="h-4 w-4 mr-2" />
+              <MagneticButton baseRadius={28}>
+                <Button
+                  variant="outline"
+                  className="group relative overflow-hidden h-16 px-14 has-[>svg]:px-14 gap-3 text-base rounded-none transition-all duration-300 hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:shadow-[0_0_32px_-4px] hover:shadow-slate-900/50 active:scale-[0.96]"
+                  onClick={() => window.open('https://github.com/Rizarre', '_blank')}
+                >
+                  <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                  <Github className="size-5 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
                   GitHub
                 </Button>
               </MagneticButton>
-              <MagneticButton>
-                <Button variant="outline" className="rounded-none" onClick={() => window.open('https://www.linkedin.com/in/seanrizarre/', '_blank')}>
-                  <Linkedin className="h-4 w-4 mr-2" />
+              <MagneticButton baseRadius={28}>
+                <Button
+                  variant="outline"
+                  className="group relative overflow-hidden h-16 px-14 has-[>svg]:px-14 gap-3 text-base rounded-none transition-all duration-300 hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] hover:shadow-[0_0_32px_-4px] hover:shadow-[#0A66C2]/60 active:scale-[0.96]"
+                  onClick={() => window.open('https://www.linkedin.com/in/seanrizarre/', '_blank')}
+                >
+                  <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                  <Linkedin className="size-5 transition-transform duration-300 group-hover:-rotate-12 group-hover:scale-110" />
                   LinkedIn
                 </Button>
               </MagneticButton>
@@ -524,7 +541,7 @@ export default function Home() {
       <section id="projects" className="py-20 bg-slate-50 dark:bg-[#0d1728] relative overflow-hidden">
         <div className="blob w-[480px] h-[480px] bg-purple-400/15 dark:bg-purple-700/15 -top-20 right-0" />
         <div className="blob w-[400px] h-[400px] bg-blue-400/15 dark:bg-blue-600/18 bottom-0 -left-20" />
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -539,48 +556,7 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
-                viewport={{ once: true }}
-                whileHover={{ y: -6 }}
-              >
-                <Card className="glass h-full hover:shadow-2xl transition-all duration-300 group overflow-hidden">
-                  <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-950 dark:to-blue-900 overflow-hidden relative">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      {project.title}
-                      <Button variant="ghost" size="sm" onClick={() => window.open(project.link, '_blank')}>
-                        <ExternalLink className="h-4 w-4" />
-                      </Button>
-                    </CardTitle>
-                    <CardDescription>{project.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech) => (
-                        <Badge key={tech} variant="outline" className="text-xs">
-                          {tech}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+          <ProjectCarousel projects={projects} />
         </div>
       </section>
 

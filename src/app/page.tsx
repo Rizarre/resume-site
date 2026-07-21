@@ -94,7 +94,7 @@ export default function Home() {
       title: 'Stinjy',
       description: 'A simple and intuitive budget management application built with React Native and Expo, designed to help users stay on top of their finances throughout the year.',
       tech: ['TypeScript', 'SQLite', 'React Native', 'Expo'],
-      link: 'https://github.com/Rizarre/stinjy-money-tracker',
+      link: 'https://github.com/Rizarre/Stinjy-Budget-Tracker',
       image: '/images/projects/stinjy.png'
     },
     {

@@ -196,3 +196,34 @@
   background-size: 200% 200%;
   animation: gradient-pan 4s ease infinite;
 }
+
+/* ── Hero typewriter caret ──
+   Drawn as a background-coloured bar, not a "|" glyph. The h1 uses
+   `background-clip: text`, which paints its gradient into the glyphs of every
+   descendant — so a text caret carries a gradient-filled duplicate beneath the
+   yellow, and fading the yellow merely uncovers it. A glyphless element adds
+   nothing to that clip region, and its own background-color is unaffected by an
+   ancestor's background-clip, so this genuinely disappears. */
+.typed-name .type-caret {
+  display: inline-block;
+  width: 0.055em;
+  height: 0.78em;
+  margin-left: 0.06em;
+  vertical-align: -0.08em;
+  background-color: #facc15;
+  border-radius: 1px;
+}
+
+/* Hard on/off, no fade: the library's own blink ramps opacity across the whole
+   cycle, so it's disabled via `cursorBlinking={false}`. The 49%→50% gap
+   interpolates over 10ms, which reads as an instant switch. Targets the cursor
+   as the last child rather than by the library's hashed CSS-module class, which
+   is not a stable name across versions. */
+@keyframes cursor-blink {
+  0%, 49%   { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.typed-name > span:last-child {
+  animation: cursor-blink 1s linear infinite;
+}

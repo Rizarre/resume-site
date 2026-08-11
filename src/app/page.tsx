@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, useScroll, useSpring } from 'framer-motion';
+import { Typewriter } from 'react-simple-typewriter';
 import { Github, Linkedin, Mail, MapPin, Phone, FileText, Code2, Layout, Server, Database, Cloud, HardDrive, GraduationCap, Award, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -94,6 +95,14 @@ export default function Home() {
     {
       title: 'Stinjy',
       description: 'A simple and intuitive budget management application built with React Native and Expo, designed to help users stay on top of their finances throughout the year.',
+      overview:
+        'Stinjy is built around the way people actually check their money: open the app, see where the month stands, close it again. Account balances, the month\'s income and expense totals, and a breakdown of spending by category all live on the first screen, so there is no digging through menus to answer "how much have I spent". It is written in React Native with Expo, so a single codebase covers both platforms, and it stores everything on-device in SQLite, which keeps the app usable without a network connection.',
+      highlights: [
+        'Balances, monthly totals and spending by category on a single screen',
+        'On-device SQLite storage, so the app keeps working offline',
+        'One React Native and Expo codebase across platforms',
+        'Typed end to end with TypeScript'
+      ],
       tech: ['TypeScript', 'SQLite', 'React Native', 'Expo'],
       link: 'https://github.com/Rizarre/Stinjy-Budget-Tracker',
       image: '/images/projects/stinjy.png',
@@ -102,6 +111,13 @@ export default function Home() {
     {
       title: 'ASEA Online Platform',
       description: 'A website for showcasing the work of ASEA iWork Builders Co. with a built in calculator for computing estimated amount of floor area.',
+      overview:
+        'A company site for ASEA iWork Builders Co. that does more than list services. Alongside the portfolio of completed work, it carries a built-in calculator that estimates floor area, letting a prospective client get a rough sense of scope before they ever pick up the phone. Built on Next.js so the presentation pages load quickly while the calculator stays interactive on the same site.',
+      highlights: [
+        'Showcase of the company\'s completed builds and services',
+        'Built-in calculator that estimates floor area for prospective clients',
+        'Server-rendered with Next.js for fast first loads'
+      ],
       tech: ['JavaScript', 'Next.js'],
       link: 'https://github.com/Rizarre/ASEA-Project',
       image: '/images/projects/asea.jpg'
@@ -109,6 +125,13 @@ export default function Home() {
     {
       title: 'SurePrice',
       description: 'An Android Mobile Application that utilizes web scraping to compare market prices on markets to see which location has the cheapest product.',
+      overview:
+        'SurePrice answers one specific question: where is this product cheapest right now? The app scrapes listings from several markets, normalises them into entries that can actually be compared side by side, and then surfaces which location is selling the searched item for the least. The scraping and data-collection side is handled in Python, while the Android client that people interact with is written in Java.',
+      highlights: [
+        'Scrapes and normalises product listings from multiple markets',
+        'Compares prices across locations to surface the cheapest option',
+        'Python for scraping and data collection, Java for the Android client'
+      ],
       tech: ['Python', 'Java', 'Android'],
       link: 'https://github.com/Rizarre/SurePrice-Mobile-Prog',
       image: '/images/projects/sureprice.png',
@@ -117,6 +140,23 @@ export default function Home() {
     {
       title: 'Hyperion Homelab Dashboard',
       description: 'A self-hosted dashboard running on TrueNAS that brings every service in my homelab into a single view, with live health checks, server stats, and update tracking.',
+      overview:
+        'Hyperion is the TrueNAS server I run at home, and this dashboard is the front door to it. Rather than remembering a dozen ports and addresses, every service I self-host sits on one page with a live health check beside it, so a container that has stopped responding is obvious the moment I open the tab. The same page carries the host\'s own CPU, memory and disk usage, tracks upstream releases for each app so nothing quietly falls behind, and pulls in the clock, weather and feeds I actually read. Access from outside the house runs over Tailscale, which keeps the whole stack reachable anywhere without exposing it to the public internet.',
+      highlights: [
+        'Live status and response-time checks on every service, so a failed container surfaces immediately',
+        'Host telemetry for the TrueNAS box itself — CPU, memory, disk and uptime at a glance',
+        'Release tracking that flags when a container has fallen behind its upstream version',
+        'Remote access through Tailscale rather than public port forwarding',
+        'Entire layout defined declaratively in YAML and kept under version control'
+      ],
+      groups: [
+        { label: 'Media', items: ['Jellyfin', 'Jellyseerr', 'Songstress'] },
+        {
+          label: 'Automation',
+          items: ['Radarr', 'Sonarr', 'Prowlarr', 'Bazarr', 'Navidrome', 'qBittorrent']
+        },
+        { label: 'Server & Access', items: ['TrueNAS', 'Tailscale'] }
+      ],
       tech: ['Glance', 'Docker', 'TrueNAS', 'YAML'],
       image: '/images/projects/glance.jpg'
     }
@@ -231,9 +271,34 @@ export default function Home() {
 
             <motion.h1
               variants={fadeInUp}
-              className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-slate-900 to-slate-700 dark:from-slate-100 dark:to-slate-300 bg-clip-text text-transparent"
+              // min-h keeps the heading from collapsing while the animation is
+              // still empty, so the hero below it doesn't jump on first paint.
+              className="text-5xl md:text-6xl font-bold mb-4 min-h-[1.2em] bg-gradient-to-r from-slate-900 to-slate-700 dark:from-slate-100 dark:to-slate-300 bg-clip-text text-transparent"
             >
-              Sean Rizarre Reyes
+              {/* Real text for crawlers and screen readers — the typed copy is
+                  purely decorative and never exists in full on the server. */}
+              <span className="sr-only">Sean Rizarre Reyes</span>
+              <span aria-hidden="true" className="typed-name">
+                <Typewriter
+                  words={['Sean Rizarre Reyes']}
+                  loop={0}
+                  typeSpeed={70}
+                  deleteSpeed={45}
+                  delaySpeed={2000}
+                  cursor
+                  // The library's own "blink" fades opacity 1 → 0 across the whole
+                  // cycle, so the cursor reads as a dim smear. Disabled here and
+                  // replaced with a hard on/off blink in globals.css.
+                  cursorBlinking={false}
+                  // Drawn as a CSS bar rather than a "|" character on purpose: the
+                  // h1 sets `background-clip: text`, which paints its gradient into
+                  // every descendant glyph. A text cursor therefore keeps a
+                  // gradient-filled copy of itself underneath the yellow, and fading
+                  // the yellow just uncovers it instead of hiding the caret. An
+                  // element with no glyph contributes nothing to that clip.
+                  cursorStyle={<span className="type-caret" />}
+                />
+              </span>
             </motion.h1>
 
             <motion.p

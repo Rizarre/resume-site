@@ -2,14 +2,26 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ExternalLink, Maximize2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { ProjectModal } from '@/components/project-modal';
+
+export interface ProjectGroup {
+  label: string;
+  items: string[];
+}
 
 export interface Project {
   title: string;
   description: string;
+  /** Long-form copy for the detail modal; falls back to `description` when absent */
+  overview?: string;
+  /** Bullet points called out in the detail modal */
+  highlights?: string[];
+  /** Labelled columns in the detail modal, e.g. services grouped by role */
+  groups?: ProjectGroup[];
   tech: string[];
   /** Omitted for projects with nothing public to link to — the card hides its link button */
   link?: string;
@@ -26,6 +38,7 @@ export interface Project {
 export function ProjectCarousel({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState(0);
   const [spacing, setSpacing] = useState(340);
+  const [opened, setOpened] = useState<Project | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const count = projects.length;
 
@@ -54,14 +67,17 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
     return () => window.removeEventListener('resize', measure);
   }, []);
 
+  // Arrow keys rotate the deck, but not while the detail modal has focus —
+  // otherwise the carousel shuffles behind the open dialog.
   useEffect(() => {
+    if (opened) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') go(-1);
       if (e.key === 'ArrowRight') go(1);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [go]);
+  }, [go, opened]);
 
   return (
     <div className="relative">
@@ -92,9 +108,19 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
               // Middle card grows via width (a real layout change → text re-renders crisply);
               // it only gets a lift here. Neighbours are blurred anyway, so scaling them is fine.
               whileHover={isActive ? { y: -10 } : { scale: 0.83 }}
-              onClick={() => !isActive && go(offset)}
+              onClick={() => (isActive ? setOpened(project) : go(offset))}
             >
               <Card
+                role="button"
+                tabIndex={isActive ? 0 : -1}
+                aria-label={
+                  isActive ? `Open details for ${project.title}` : `Show ${project.title}`
+                }
+                onKeyDown={e => {
+                  if (e.key !== 'Enter' && e.key !== ' ') return;
+                  e.preventDefault();
+                  setOpened(project);
+                }}
                 // Blur lives here as a plain class so the active card has NO filter at all
                 // (a filter forces layer rasterization and softens scaled text).
                 className={`group/card relative glass overflow-hidden pointer-events-auto transition-[width,filter,box-shadow] duration-500 ease-out ${
@@ -103,7 +129,7 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
                     : 'w-[300px] sm:w-[380px] lg:w-[430px] blur-[2px]'
                 } ${
                   isActive
-                    ? 'shadow-2xl shadow-blue-500/25 cursor-default hover:ring-2 hover:ring-purple-500/60 hover:shadow-[0_25px_70px_-12px] hover:shadow-purple-500/50'
+                    ? 'shadow-2xl shadow-blue-500/25 cursor-pointer hover:ring-2 hover:ring-purple-500/60 hover:shadow-[0_25px_70px_-12px] hover:shadow-purple-500/50'
                     : 'cursor-pointer shadow-lg hover:shadow-xl'
                 }`}
               >
@@ -125,6 +151,15 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
                       isActive ? 'opacity-0' : 'opacity-25'
                     }`}
                   />
+                  {/* Hover affordance: tells the user the centred card opens a detail view */}
+                  {isActive && (
+                    <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-slate-950/50 opacity-0 transition-opacity duration-300 group-hover/card:opacity-100">
+                      <span className="flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-slate-900 shadow-lg">
+                        <Maximize2 className="h-4 w-4" />
+                        View details
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <CardHeader className="relative z-10">
                   <CardTitle className="flex items-center justify-between gap-2">
@@ -198,6 +233,8 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
           />
         ))}
       </div>
+
+      <ProjectModal project={opened} onOpenChange={open => !open && setOpened(null)} />
     </div>
   );
 }

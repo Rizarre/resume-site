@@ -11,7 +11,8 @@ export interface Project {
   title: string;
   description: string;
   tech: string[];
-  link: string;
+  /** Omitted for projects with nothing public to link to — the card hides its link button */
+  link?: string;
   image: string;
   /** 'contain' letterboxes portrait/mobile screenshots so the whole frame shows */
   fit?: 'cover' | 'contain';
@@ -130,18 +131,20 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
                     <span className="gradient-pan bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text transition-colors duration-500 group-hover/card:text-transparent">
                       {project.title}
                     </span>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      tabIndex={isActive ? 0 : -1}
-                      className={isActive ? '' : 'pointer-events-none opacity-0'}
-                      onClick={e => {
-                        e.stopPropagation();
-                        window.open(project.link, '_blank');
-                      }}
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                    </Button>
+                    {project.link && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        tabIndex={isActive ? 0 : -1}
+                        className={isActive ? '' : 'pointer-events-none opacity-0'}
+                        onClick={e => {
+                          e.stopPropagation();
+                          window.open(project.link, '_blank');
+                        }}
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                      </Button>
+                    )}
                   </CardTitle>
                   <CardDescription>{project.description}</CardDescription>
                 </CardHeader>

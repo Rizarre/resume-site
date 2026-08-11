@@ -113,6 +113,12 @@ export default function Home() {
       link: 'https://github.com/Rizarre/SurePrice-Mobile-Prog',
       image: '/images/projects/sureprice.png',
       fit: 'contain' as const
+    },
+    {
+      title: 'Hyperion Homelab Dashboard',
+      description: 'A self-hosted dashboard running on TrueNAS that brings every service in my homelab into a single view, with live health checks, server stats, and update tracking.',
+      tech: ['Glance', 'Docker', 'TrueNAS', 'YAML'],
+      image: '/images/projects/glance.jpg'
     }
   ];
 

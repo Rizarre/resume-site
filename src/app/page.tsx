@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Typewriter } from 'react-simple-typewriter';
-import { Github, Linkedin, Mail, MapPin, Phone, FileText, Code2, Layout, Server, Database, Cloud, HardDrive, GraduationCap, Award, Smartphone } from 'lucide-react';
+import { Github, Linkedin, Mail, MapPin, Phone, FileText, ChevronDown, Code2, Layout, Server, Database, Cloud, HardDrive, GraduationCap, Award, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -12,6 +12,7 @@ import { MobileNav } from '@/components/mobile-nav';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { MagneticButton } from '@/components/magnetic-button';
 import { ProjectCarousel } from '@/components/project-carousel';
+import { ResumeMenu } from '@/components/resume-menu';
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
@@ -30,6 +31,13 @@ export default function Home() {
       }
     }
   };
+
+  // Scroll reveals replay on every pass instead of firing once. With
+  // `once: false`, framer resets an element to its `initial` state as soon as it
+  // leaves the viewport, so scrolling back up plays the entrance again. `amount`
+  // is the fraction that has to be visible to trigger — and to drop below before
+  // it re-arms — which keeps the replay from retriggering on tiny scroll jitters.
+  const revealOnScroll = { once: false, amount: 0.15 };
 
   // `span` drives the bento layout on a 6-column grid (lg); featured tiles use the accent glass.
   const skillCategories = [
@@ -93,6 +101,29 @@ export default function Home() {
 
   const projects = [
     {
+      title: 'Hyperion Homelab Dashboard',
+      description: 'A self-hosted dashboard running on TrueNAS that brings every service in my homelab into a single view, with live health checks, server stats, and update tracking.',
+      overview:
+        'Hyperion is the TrueNAS server I run at home, and this dashboard is the front door to it. Rather than remembering a dozen ports and addresses, every service I self-host sits on one page with a live health check beside it, so a container that has stopped responding is obvious the moment I open the tab. The same page carries the host\'s own CPU, memory and disk usage, tracks upstream releases for each app so nothing quietly falls behind, and pulls in the clock, weather and feeds I actually read. Access from outside the house runs over Tailscale, which keeps the whole stack reachable anywhere without exposing it to the public internet.',
+      highlights: [
+        'Live status and response-time checks on every service, so a failed container surfaces immediately',
+        'Host telemetry for the TrueNAS box itself — CPU, memory, disk and uptime at a glance',
+        'Release tracking that flags when a container has fallen behind its upstream version',
+        'Remote access through Tailscale rather than public port forwarding',
+        'Entire layout defined declaratively in YAML and kept under version control'
+      ],
+      groups: [
+        { label: 'Media', items: ['Jellyfin', 'Jellyseerr', 'Songstress'] },
+        {
+          label: 'Automation',
+          items: ['Radarr', 'Sonarr', 'Prowlarr', 'Bazarr', 'Navidrome', 'qBittorrent']
+        },
+        { label: 'Server & Access', items: ['TrueNAS', 'Tailscale'] }
+      ],
+      tech: ['Glance', 'Docker', 'TrueNAS', 'YAML'],
+      image: '/images/projects/glance.jpg'
+    },
+    {
       title: 'Stinjy',
       description: 'A simple and intuitive budget management application built with React Native and Expo, designed to help users stay on top of their finances throughout the year.',
       overview:
@@ -136,29 +167,6 @@ export default function Home() {
       link: 'https://github.com/Rizarre/SurePrice-Mobile-Prog',
       image: '/images/projects/sureprice.png',
       fit: 'contain' as const
-    },
-    {
-      title: 'Hyperion Homelab Dashboard',
-      description: 'A self-hosted dashboard running on TrueNAS that brings every service in my homelab into a single view, with live health checks, server stats, and update tracking.',
-      overview:
-        'Hyperion is the TrueNAS server I run at home, and this dashboard is the front door to it. Rather than remembering a dozen ports and addresses, every service I self-host sits on one page with a live health check beside it, so a container that has stopped responding is obvious the moment I open the tab. The same page carries the host\'s own CPU, memory and disk usage, tracks upstream releases for each app so nothing quietly falls behind, and pulls in the clock, weather and feeds I actually read. Access from outside the house runs over Tailscale, which keeps the whole stack reachable anywhere without exposing it to the public internet.',
-      highlights: [
-        'Live status and response-time checks on every service, so a failed container surfaces immediately',
-        'Host telemetry for the TrueNAS box itself — CPU, memory, disk and uptime at a glance',
-        'Release tracking that flags when a container has fallen behind its upstream version',
-        'Remote access through Tailscale rather than public port forwarding',
-        'Entire layout defined declaratively in YAML and kept under version control'
-      ],
-      groups: [
-        { label: 'Media', items: ['Jellyfin', 'Jellyseerr', 'Songstress'] },
-        {
-          label: 'Automation',
-          items: ['Radarr', 'Sonarr', 'Prowlarr', 'Bazarr', 'Navidrome', 'qBittorrent']
-        },
-        { label: 'Server & Access', items: ['TrueNAS', 'Tailscale'] }
-      ],
-      tech: ['Glance', 'Docker', 'TrueNAS', 'YAML'],
-      image: '/images/projects/glance.jpg'
     }
   ];
 
@@ -220,15 +228,17 @@ export default function Home() {
             </nav>
             <div className="flex items-center gap-2">
               <ThemeToggle />
-              <Button
-                variant="outline"
-                size="sm"
-                className="hidden sm:flex items-center gap-2"
-                onClick={() => window.open('/Sean-Rizarre-Reyes-Resume.pdf', '_blank')}
-              >
-                <FileText className="h-4 w-4" />
-                Resume
-              </Button>
+              <ResumeMenu>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="hidden sm:flex items-center gap-2"
+                >
+                  <FileText className="h-4 w-4" />
+                  Resume
+                  <ChevronDown className="h-3.5 w-3.5 opacity-70" />
+                </Button>
+              </ResumeMenu>
               <MobileNav />
             </div>
           </div>
@@ -248,7 +258,8 @@ export default function Home() {
             className="text-center"
             variants={staggerChildren}
             initial="initial"
-            animate="animate"
+            whileInView="animate"
+            viewport={revealOnScroll}
           >
             <motion.div variants={fadeInUp} className="mb-8 flex justify-center">
               <MagneticButton
@@ -391,7 +402,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            viewport={revealOnScroll}
           >
             <h2 className="text-3xl font-bold mb-3">Skills & Technologies</h2>
             <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4" />
@@ -410,7 +421,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-                  viewport={{ once: true }}
+                  viewport={revealOnScroll}
                   whileHover={{ y: -5 }}
                 >
                   <div className={`h-full rounded-2xl p-6 transition-all duration-300 group ${category.featured ? 'glass-accent hover:shadow-2xl hover:shadow-blue-500/20' : 'glass hover:shadow-2xl'}`}>
@@ -448,7 +459,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            viewport={revealOnScroll}
           >
             <h2 className="text-3xl font-bold mb-3">Experience</h2>
             <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4" />
@@ -469,7 +480,7 @@ export default function Home() {
                   initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-                  viewport={{ once: true }}
+                  viewport={revealOnScroll}
                 >
                   {/* Timeline dot */}
                   <div className="absolute left-3.5 top-6 w-5 h-5 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 ring-4 ring-white dark:ring-black hidden md:flex items-center justify-center z-10">
@@ -527,7 +538,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            viewport={revealOnScroll}
           >
             <h2 className="text-3xl font-bold mb-3">Education</h2>
             <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4" />
@@ -541,7 +552,7 @@ export default function Home() {
             variants={staggerChildren}
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true }}
+            viewport={revealOnScroll}
           >
             {/* Main degree tile */}
             <motion.div variants={fadeInUp} className="lg:col-span-2 lg:row-span-2" whileHover={{ y: -5 }}>
@@ -618,7 +629,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            viewport={revealOnScroll}
           >
             <h2 className="text-3xl font-bold mb-3">Featured Projects</h2>
             <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4" />
@@ -640,7 +651,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            viewport={revealOnScroll}
           >
             <h2 className="text-3xl font-bold mb-3">Recommendations</h2>
             <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4" />
@@ -656,7 +667,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
+                viewport={revealOnScroll}
               >
                 <Card className="glass h-full hover:shadow-2xl transition-all duration-300">
                   <CardHeader>
@@ -705,7 +716,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            viewport={revealOnScroll}
           >
             <h2 className="text-3xl font-bold mb-3">Let&apos;s Work Together</h2>
             <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4" />
@@ -719,7 +730,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
+            viewport={revealOnScroll}
           >
             <div className="space-y-8">
               <div className="flex items-center gap-4">
@@ -783,14 +794,16 @@ export default function Home() {
                 <Separator />
 
                 <div className="space-y-4">
-                  <Button
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                    size="lg"
-                    onClick={() => window.open('/Sean-Rizarre-Reyes-Resume.pdf', '_blank')}
-                  >
-                    <FileText className="h-5 w-5 mr-2" />
-                    View Resume
-                  </Button>
+                  <ResumeMenu align="center" matchTriggerWidth>
+                    <Button
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                      size="lg"
+                    >
+                      <FileText className="h-5 w-5 mr-2" />
+                      View Resume
+                      <ChevronDown className="h-4 w-4 ml-2 opacity-80" />
+                    </Button>
+                  </ResumeMenu>
 
                   <div className="flex gap-3">
                     <Button

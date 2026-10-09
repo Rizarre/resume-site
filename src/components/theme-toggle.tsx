@@ -2,50 +2,36 @@
 
 import { useState, useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
+/** Dark-first: dark unless the visitor has chosen light. The class is set pre-paint in layout. */
 export function ThemeToggle() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
-    // Light is the default: dark only applies when the visitor has explicitly
-    // picked it before. The system preference is deliberately not consulted.
-    const theme = localStorage.getItem('theme');
-
-    if (theme === 'dark') {
-      setIsDark(true);
-      document.documentElement.classList.add('dark');
-    } else {
-      setIsDark(false);
-      document.documentElement.classList.remove('dark');
-    }
+    setIsDark(document.documentElement.classList.contains('dark'));
   }, []);
 
   const toggleTheme = () => {
-    if (isDark) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-      setIsDark(false);
-    } else {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-      setIsDark(true);
-    }
+    const next = !isDark;
+    document.documentElement.classList.toggle('dark', next);
+    try {
+      localStorage.setItem('theme', next ? 'dark' : 'light');
+    } catch {}
+    setIsDark(next);
   };
 
   return (
-    <Button
-      variant="ghost"
-      size="sm"
+    <button
+      type="button"
       onClick={toggleTheme}
-      className="p-2"
-      aria-label="Toggle theme"
+      aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+      className="group relative grid size-10 place-items-center rounded-full text-[var(--ink-2)] transition-colors hover:bg-[var(--line)] hover:text-[var(--ink)]"
     >
       {isDark ? (
-        <Sun className="h-5 w-5 text-yellow-500" />
+        <Sun className="size-[18px] transition-transform duration-500 group-hover:rotate-45" />
       ) : (
-        <Moon className="h-5 w-5 text-slate-700" />
+        <Moon className="size-[18px] transition-transform duration-500 group-hover:-rotate-12" />
       )}
-    </Button>
+    </button>
   );
 }

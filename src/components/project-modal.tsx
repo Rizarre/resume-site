@@ -1,8 +1,6 @@
 'use client';
 
 import { ExternalLink } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import {
   Dialog,
   DialogContent,
@@ -11,6 +9,8 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import type { Project } from '@/components/project-carousel';
+
+const BANDS = ['--s-ui', '--s-api', '--s-data', '--s-ai', '--s-cloud', '--s-lab'];
 
 /**
  * Detail view for a single project: full-width screenshot on top, long-form
@@ -26,44 +26,35 @@ export function ProjectModal({
 }) {
   return (
     <Dialog open={project !== null} onOpenChange={onOpenChange}>
-      <DialogContent className="glass max-w-3xl max-h-[90vh] overflow-y-auto p-0 gap-0">
+      <DialogContent className="max-h-[90vh] max-w-3xl gap-0 overflow-y-auto rounded-[1.25rem] border-[var(--line-strong)] bg-[var(--popover)] p-0 sm:max-w-3xl">
         {project && (
           <>
             {/* Screenshot always uses object-contain here: the point of the modal
                 is seeing the whole frame, even for the portrait phone captures. */}
-            <div className="relative bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-950 dark:to-blue-900">
+            <div className="relative border-b border-[var(--line)] bg-[var(--ground-2)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={project.image}
-                alt={`${project.title} screenshot`}
-                className="w-full max-h-[50vh] object-contain"
-              />
+              <img src={project.image} alt={`${project.title} screenshot`} className="max-h-[50vh] w-full object-contain" />
+              <div aria-hidden className="spectrum absolute inset-x-0 bottom-0 h-[2px]" />
             </div>
 
-            <div className="p-6 space-y-6">
-              <DialogHeader>
-                <DialogTitle className="text-2xl gradient-pan bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <div className="space-y-7 p-6 sm:p-8">
+              <DialogHeader className="text-left">
+                <DialogTitle className="font-display-normal text-2xl font-bold tracking-[-0.02em] sm:text-3xl">
                   {project.title}
                 </DialogTitle>
-                <DialogDescription className="sr-only">
-                  Details for the {project.title} project
-                </DialogDescription>
+                <DialogDescription className="sr-only">Details for the {project.title} project</DialogDescription>
               </DialogHeader>
 
-              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                {project.overview ?? project.description}
-              </p>
+              <p className="max-w-[68ch] leading-relaxed text-[var(--ink-2)]">{project.overview ?? project.description}</p>
 
               {project.highlights && (
-                <ul className="space-y-2">
-                  {project.highlights.map(highlight => (
-                    <li
-                      key={highlight}
-                      className="flex gap-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300"
-                    >
+                <ul className="space-y-2.5">
+                  {project.highlights.map((highlight, i) => (
+                    <li key={highlight} className="flex gap-3 text-[15px] leading-relaxed text-[var(--ink-2)]">
                       <span
                         aria-hidden
-                        className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
+                        className="mt-2 size-1.5 shrink-0 rounded-full"
+                        style={{ background: `var(${BANDS[i % BANDS.length]})` }}
                       />
                       {highlight}
                     </li>
@@ -72,18 +63,18 @@ export function ProjectModal({
               )}
 
               {project.groups && (
-                <div className="grid gap-4 sm:grid-cols-3">
-                  {project.groups.map(group => (
-                    <div key={group.label} className="glass-accent rounded-lg p-4">
-                      <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                <div className="grid gap-3 sm:grid-cols-3">
+                  {project.groups.map((group, i) => (
+                    <div key={group.label} className="rounded-xl border border-[var(--line-strong)] p-4">
+                      <h4
+                        className="font-mono text-[11px] font-semibold uppercase tracking-wider"
+                        style={{ color: `var(${BANDS[(i * 2 + 1) % BANDS.length]})` }}
+                      >
                         {group.label}
                       </h4>
-                      <ul className="mt-2 space-y-1">
+                      <ul className="mt-2.5 space-y-1">
                         {group.items.map(item => (
-                          <li
-                            key={item}
-                            className="text-sm text-slate-700 dark:text-slate-200"
-                          >
+                          <li key={item} className="text-sm text-[var(--ink)]">
                             {item}
                           </li>
                         ))}
@@ -93,22 +84,25 @@ export function ProjectModal({
                 </div>
               )}
 
-              <div className="flex flex-wrap items-center gap-2 pt-2">
+              <div className="flex flex-wrap items-center gap-2 border-t border-[var(--line)] pt-6">
                 {project.tech.map(tech => (
-                  <Badge key={tech} variant="outline" className="text-xs">
+                  <span
+                    key={tech}
+                    className="rounded-full border border-[var(--line-strong)] px-2.5 py-1 font-mono text-[11px] text-[var(--ink-2)]"
+                  >
                     {tech}
-                  </Badge>
+                  </span>
                 ))}
                 {project.link && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="ml-auto"
-                    onClick={() => window.open(project.link, '_blank')}
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-auto inline-flex items-center gap-2 rounded-full bg-[var(--ink)] px-4 py-2 text-sm font-medium text-[var(--ground)] transition-transform hover:-translate-y-0.5"
                   >
                     View project
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </Button>
+                    <ExternalLink className="size-4" />
+                  </a>
                 )}
               </div>
             </div>

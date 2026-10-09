@@ -54,56 +54,94 @@ export function MagneticButton({
   const siy = useSpring(iy, { stiffness: 300, damping: 18, mass: 0.3 });
 
   useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      const el = outerRef.current;
-      if (!el) return;
+    const el = outerRef.current;
+    if (!el || !window.matchMedia('(pointer: fine)').matches) return;
 
-      const rect    = el.getBoundingClientRect();
-      const centerX = rect.left + rect.width  / 2;
-      const centerY = rect.top  + rect.height / 2;
-      const dx      = e.clientX - centerX;
-      const dy      = e.clientY - centerY;
-      const dist    = Math.hypot(dx, dy);
+    // The resting centre is cached and only re-read after scroll/resize. Reading
+    // layout on every mousemove (for every button) was a big source of jank.
+    let cx = 0;
+    let cy = 0;
+    let dirty = true;
+    let engaged = false;
+    let lastRadius = '';
+    const remeasure = () => {
+      const rect = el.getBoundingClientRect();
+      // Subtract the live spring offset so the cache is the resting position.
+      cx = rect.left + rect.width / 2 - sx.get();
+      cy = rect.top + rect.height / 2 - sy.get();
+      dirty = false;
+    };
+    const setRadius = (value: string) => {
+      if (value === lastRadius) return;
+      lastRadius = value;
+      el.style.borderRadius = value;
+    };
+
+    const onMove = (e: MouseEvent) => {
+      if (dirty) remeasure();
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.hypot(dx, dy);
 
       if (dist < detectionRadius) {
+        engaged = true;
         // t: 0 at edge of radius → 1 at button center
-        const t  = 1 - dist / detectionRadius;
-        const nx = dx / Math.max(dist, 1);   // unit vector toward cursor
+        const t = 1 - dist / detectionRadius;
+        const nx = dx / Math.max(dist, 1); // unit vector toward cursor
         const ny = dy / Math.max(dist, 1);
 
-        // Move the shell and inner content
         x.set(dx * strength * t);
         y.set(dy * strength * t);
         ix.set(dx * strength * innerStrength * t);
         iy.set(dy * strength * innerStrength * t);
 
-        // --- Border-radius deformation ---
-        // Each corner has a "natural direction". The corner most aligned with
-        // the cursor direction gets pulled (radius shrinks to near-0).
+        // Border-radius deformation: the corner most aligned with the cursor
+        // direction gets pulled toward a sharp point.
         // TL=(-1,-1) TR=(1,-1) BR=(1,1) BL=(-1,1), normalised by √2
         const corners: [number, number][] = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
         const maxPull = t * 0.94;
-
         const radii = corners.map(([ex, ey]) => {
-          // Dot product: how much does cursor direction point at this corner?
           const alignment = (nx * ex + ny * ey) / Math.SQRT2; // -1..1
           const pull = Math.max(0, alignment) * maxPull;
-          // Lerp from the resting radius → 4 (sharp point)
           return Math.round(baseRadius + (4 - baseRadius) * pull);
         });
-
-        // Apply directly to DOM — no re-render, no lag
-        el.style.borderRadius = radii.map(r => `${r}px`).join(' ');
-      } else {
+        setRadius(radii.map(r => `${r}px`).join(' '));
+      } else if (engaged) {
+        engaged = false;
         x.set(0);  y.set(0);
         ix.set(0); iy.set(0);
-        el.style.borderRadius = `${baseRadius}px`;
+        setRadius(`${baseRadius}px`);
       }
     };
+    const markDirty = () => {
+      dirty = true;
+    };
 
-    window.addEventListener('mousemove', onMove);
-    return () => window.removeEventListener('mousemove', onMove);
-  }, [x, y, ix, iy, strength, innerStrength, detectionRadius, baseRadius]);
+    // Only track the cursor while the button is on (or near) the screen.
+    let listening = false;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !listening) {
+          dirty = true;
+          window.addEventListener('mousemove', onMove, { passive: true });
+          listening = true;
+        } else if (!entry.isIntersecting && listening) {
+          window.removeEventListener('mousemove', onMove);
+          listening = false;
+        }
+      },
+      { rootMargin: '120px' }
+    );
+    io.observe(el);
+    window.addEventListener('scroll', markDirty, { passive: true });
+    window.addEventListener('resize', markDirty, { passive: true });
+    return () => {
+      io.disconnect();
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('scroll', markDirty);
+      window.removeEventListener('resize', markDirty);
+    };
+  }, [x, y, ix, iy, sx, sy, strength, innerStrength, detectionRadius, baseRadius]);
 
   return (
     <motion.div
@@ -121,7 +159,7 @@ export function MagneticButton({
       }}
     >
       <motion.div
-        className="flex items-center"
+        className="flex w-full items-center"
         style={{ x: six, y: siy }}
       >
         {children}

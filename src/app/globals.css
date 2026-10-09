@@ -8,19 +8,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
+  --font-display: var(--font-archivo);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -43,74 +31,80 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* ── Prism Bench ──────────────────────────────────────────────
+   Light is "the bench in daylight"; dark (default) is the lab with the lights off.
+   The six spectral bands encode skill layers everywhere on the page. */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --radius: 0.75rem;
+
+  --ground: #f3f5f8;
+  --ground-2: #e9edf2;
+  --ink: #0b0d12;
+  --ink-2: #353c49;
+  --ink-3: #555d6c;
+  --line: rgb(11 13 18 / 0.1);
+  --line-strong: rgb(11 13 18 / 0.2);
+  --glass-bg: rgb(255 255 255 / 0.62);
+  --glass-border: rgb(11 13 18 / 0.1);
+  --glass-highlight: rgb(255 255 255 / 0.9);
+  --glass-shadow: 0 1px 2px rgb(11 13 18 / 0.06), 0 12px 32px -8px rgb(11 13 18 / 0.14);
+  --hole: rgb(11 13 18 / 0.13);
+  --hole-lit: rgb(11 13 18 / 0.4);
+  --beam: #0b0d12;
+
+  --s-ui: #c2330f;
+  --s-api: #8a5700;
+  --s-data: #067a58;
+  --s-ai: #066da3;
+  --s-cloud: #2f5bea;
+  --s-lab: #7445e0;
+
+  --background: var(--ground);
+  --foreground: var(--ink);
+  --card: var(--glass-bg);
+  --card-foreground: var(--ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: #ffffff;
+  --secondary: var(--ground-2);
+  --secondary-foreground: var(--ink);
+  --muted: var(--ground-2);
+  --muted-foreground: var(--ink-3);
+  --accent: var(--ground-2);
+  --accent-foreground: var(--ink);
+  --destructive: #d23b2a;
+  --border: var(--line);
+  --input: var(--line-strong);
+  --ring: var(--s-ai);
 }
 
 .dark {
-  /* ── Dark Navy & Blue palette ── */
-  --background: oklch(0.14 0.04 255);           /* #0c1525 — deep navy base     */
-  --foreground: oklch(0.97 0 0);                /* white                        */
-  --card: oklch(0.20 0.048 256);                /* #162237 — card surface       */
-  --card-foreground: oklch(0.97 0 0);
-  --popover: oklch(0.20 0.048 256);
-  --popover-foreground: oklch(0.97 0 0);
-  --primary: oklch(0.623 0.214 259);            /* blue-500                     */
-  --primary-foreground: oklch(0.97 0 0);
-  --secondary: oklch(0.24 0.05 256);            /* #1a2d47 — elevated surface   */
-  --secondary-foreground: oklch(0.97 0 0);
-  --muted: oklch(0.24 0.05 256);
-  --muted-foreground: oklch(0.62 0.07 255);     /* blue-tinted muted text       */
-  --accent: oklch(0.623 0.214 259);             /* blue accent                  */
-  --accent-foreground: oklch(0.97 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(0.623 0.214 259 / 18%);       /* subtle blue border           */
-  --input: oklch(0.623 0.214 259 / 12%);
-  --ring: oklch(0.707 0.165 254);               /* blue-400                     */
-  --chart-1: oklch(0.623 0.214 259);
-  --chart-2: oklch(0.707 0.165 254);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.11 0.025 255);
-  --sidebar-foreground: oklch(0.97 0 0);
-  --sidebar-primary: oklch(0.623 0.214 259);
-  --sidebar-primary-foreground: oklch(0.97 0 0);
-  --sidebar-accent: oklch(0.15 0.03 255);
-  --sidebar-accent-foreground: oklch(0.97 0 0);
-  --sidebar-border: oklch(0.623 0.214 259 / 15%);
-  --sidebar-ring: oklch(0.707 0.165 254);
+  --ground: #07080d;
+  --ground-2: #0d0f16;
+  --ink: #f5f7fa;
+  --ink-2: #c3c9d4;
+  --ink-3: #8a93a3;
+  --line: rgb(245 247 250 / 0.09);
+  --line-strong: rgb(245 247 250 / 0.18);
+  --glass-bg: rgb(20 23 32 / 0.5);
+  --glass-border: rgb(245 247 250 / 0.1);
+  --glass-highlight: rgb(255 255 255 / 0.07);
+  --glass-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 18px 40px -12px rgb(0 0 0 / 0.6);
+  --hole: rgb(245 247 250 / 0.07);
+  --hole-lit: rgb(245 247 250 / 0.42);
+  --beam: #ffffff;
+
+  --s-ui: #ff5a36;
+  --s-api: #ffb020;
+  --s-data: #2de2a6;
+  --s-ai: #33c2ff;
+  --s-cloud: #5b85ff;
+  --s-lab: #a585ff;
+
+  --popover: #11131b;
+  --primary-foreground: #07080d;
+  --destructive: #ff6b57;
 }
 
 @layer base {
@@ -119,111 +113,251 @@
   }
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
   }
   body {
-    @apply bg-background text-foreground;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  }
+  ::selection {
+    background: var(--s-api);
+    color: #07080d;
+  }
+  :focus-visible {
+    outline: 2px solid var(--s-ai);
+    outline-offset: 3px;
+  }
+  /* Scrollbar: a thin glass rail */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--line-strong);
+    border-radius: 999px;
+    border: 3px solid var(--ground);
   }
 }
 
-.dot-grid {
-  background-image: radial-gradient(circle, rgba(148, 163, 184, 0.35) 1px, transparent 1px);
+@layer components {
+/* ── Type ── */
+.font-display {
+  font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  font-variation-settings: "wdth" 125;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 0.92;
+}
+
+.font-display-normal {
+  font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  font-variation-settings: "wdth" 100;
+}
+
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* Name entrance: the letters widen like light spreading out of the prism */
+@keyframes spread {
+  from {
+    font-variation-settings: "wdth" 62;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    opacity: 0;
+    filter: blur(10px);
+  }
+  to {
+    font-variation-settings: "wdth" 125;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+.name-spread {
+  animation: spread 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Optical breadboard: the bench's tapped-hole grid, lit near the cursor ── */
+.bench {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(circle, var(--hole) 1.1px, transparent 1.6px);
   background-size: 28px 28px;
+  background-position: 14px 14px;
 }
-
-.dark .dot-grid {
-  background-image: radial-gradient(circle, rgba(59, 130, 246, 0.18) 1px, transparent 1px);
+/* A 440px tile that follows the cursor with a transform. Its dots are offset by
+   the same amount so they sit exactly on the bench grid; the mask is static, so
+   each move repaints only this tile, never the whole viewport. */
+.bench-lit {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 440px;
+  height: 440px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 300ms ease;
+  will-change: transform;
+  background-image: radial-gradient(circle, var(--hole-lit) 1.2px, transparent 1.8px);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(closest-side, #000, transparent);
+  mask-image: radial-gradient(closest-side, #000, transparent);
 }
+.bench-lit.on { opacity: 1; }
 
+/* Floating light pools (where the spectrum lands) */
 @keyframes float {
-  0%, 100% { transform: translateY(0px) translateX(0px); }
-  33% { transform: translateY(-12px) translateX(6px); }
-  66% { transform: translateY(6px) translateX(-8px); }
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  33% { transform: translate3d(6px, -14px, 0); }
+  66% { transform: translate3d(-8px, 6px, 0); }
 }
+.orb-float { animation: float 9s ease-in-out infinite; }
+.orb-float-slow { animation: float 14s ease-in-out infinite reverse; }
 
-.orb-float {
-  animation: float 8s ease-in-out infinite;
-}
-
-.orb-float-slow {
-  animation: float 12s ease-in-out infinite reverse;
-}
-
-/* ── Frosted glass (glassmorphism) ── */
-.glass {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-}
-
-.dark .glass {
-  background: rgba(22, 34, 55, 0.45);
-  border: 1px solid rgba(99, 130, 246, 0.18);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(148, 180, 255, 0.08);
-}
-
-/* Highlighted glass tile — subtle blue tint for accent bento cards */
-.glass-accent {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.14), rgba(147, 51, 234, 0.10));
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(99, 130, 246, 0.28);
-  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-}
-
-.dark .glass-accent {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.22), rgba(88, 28, 135, 0.20));
-  border: 1px solid rgba(99, 130, 246, 0.35);
-  box-shadow: 0 8px 32px rgba(37, 99, 235, 0.22), inset 0 1px 0 rgba(148, 180, 255, 0.12);
-}
-
-/* Soft decorative blobs to give the frost something to refract */
 .blob {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(80px);
+  filter: blur(90px);
   pointer-events: none;
+  /* Own layer: the float animation then moves a cached bitmap instead of re-blurring */
+  will-change: transform;
+  opacity: 0.22;
+}
+.dark .blob { opacity: 0.16; }
+
+/* ── Cut glass ──
+   Frosted panel whose edge disperses into spectrum where the cursor is.
+   `data-spot` elements receive --mx/--my from <BenchLight />. */
+.glass {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 var(--glass-highlight), var(--glass-shadow);
 }
 
-/* ── Panning gradient (hovered carousel card) ── */
+[data-spot]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: radial-gradient(
+    260px circle at var(--mx, -999px) var(--my, -999px),
+    var(--beam) 0%,
+    var(--s-api) 12%,
+    var(--s-data) 24%,
+    var(--s-ai) 36%,
+    var(--s-lab) 46%,
+    transparent 62%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0;
+  transition: opacity 400ms ease;
+  z-index: 2;
+}
+[data-spot]:hover::before { opacity: 1; }
+
+/* Same panel, no backdrop blur: for glass that sits over animated content */
+.glass-solid {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: color-mix(in srgb, var(--ground-2) 92%, transparent);
+}
+
+/* Soft interior caustic that follows the cursor inside the panel */
+[data-spot]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(380px circle at var(--mx, -999px) var(--my, -999px), rgb(255 255 255 / 0.06), transparent 60%);
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+:root:not(.dark) [data-spot]::after {
+  background: radial-gradient(380px circle at var(--mx, -999px) var(--my, -999px), rgb(255 255 255 / 0.7), transparent 60%);
+}
+[data-spot]:hover::after { opacity: 1; }
+
+/* Hard-stop spectrum: the six bands, in order */
+.spectrum {
+  background: linear-gradient(
+    90deg,
+    var(--s-ui) 0 16.66%,
+    var(--s-api) 0 33.33%,
+    var(--s-data) 0 50%,
+    var(--s-ai) 0 66.66%,
+    var(--s-cloud) 0 83.33%,
+    var(--s-lab) 0 100%
+  );
+}
+.spectrum-soft {
+  background: linear-gradient(90deg, var(--s-ui), var(--s-api), var(--s-data), var(--s-ai), var(--s-cloud), var(--s-lab));
+}
+
+/* Panning sheen (hovered carousel card) */
 @keyframes gradient-pan {
   0%, 100% { background-position: 0% 50%; }
-  50%      { background-position: 100% 50%; }
+  50% { background-position: 100% 50%; }
 }
-
 .gradient-pan {
   background-size: 200% 200%;
-  animation: gradient-pan 4s ease infinite;
+  animation: gradient-pan 5s ease infinite;
 }
 
-/* ── Hero typewriter caret ──
-   Drawn as a background-coloured bar, not a "|" glyph. The h1 uses
-   `background-clip: text`, which paints its gradient into the glyphs of every
-   descendant — so a text caret carries a gradient-filled duplicate beneath the
-   yellow, and fading the yellow merely uncovers it. A glyphless element adds
-   nothing to that clip region, and its own background-color is unaffected by an
-   ancestor's background-clip, so this genuinely disappears. */
-.typed-name .type-caret {
+/* Typed-name caret: a solid bar (not a glyph) with a hard on/off blink */
+.type-caret {
   display: inline-block;
-  width: 0.055em;
+  width: 0.06em;
   height: 0.78em;
   margin-left: 0.06em;
-  vertical-align: -0.08em;
-  background-color: #facc15;
+  vertical-align: -0.04em;
+  background-color: var(--s-api);
   border-radius: 1px;
+  animation: caret 1s steps(1) infinite;
 }
 
-/* Hard on/off, no fade: the library's own blink ramps opacity across the whole
-   cycle, so it's disabled via `cursorBlinking={false}`. The 49%→50% gap
-   interpolates over 10ms, which reads as an instant switch. Targets the cursor
-   as the last child rather than by the library's hashed CSS-module class, which
-   is not a stable name across versions. */
-@keyframes cursor-blink {
-  0%, 49%   { opacity: 1; }
+/* Blinking caret for the streaming chat */
+@keyframes caret {
+  0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
 }
+.caret::after {
+  content: "";
+  display: inline-block;
+  width: 0.5ch;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: currentColor;
+  animation: caret 1s steps(1) infinite;
+}
 
-.typed-name > span:last-child {
-  animation: cursor-blink 1s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .name-spread,
+  .orb-float,
+  .orb-float-slow,
+  .gradient-pan,
+  .caret::after {
+    animation: none !important;
+  }
+  html { scroll-behavior: auto; }
 }

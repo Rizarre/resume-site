@@ -34,7 +34,8 @@ export const viewport: Viewport = {
 };
 
 // Dark-first: apply the stored theme (or dark) before paint so there is no flash.
-const themeScript = `try{var t=localStorage.getItem('theme');if(t!=='light')document.documentElement.classList.add('dark')}catch(e){document.documentElement.classList.add('dark')}`;
+// Keyed 'theme-v2' so a 'light' saved by the old light-default site is ignored.
+const themeScript = `try{var t=localStorage.getItem('theme-v2');if(t!=='light')document.documentElement.classList.add('dark')}catch(e){document.documentElement.classList.add('dark')}`;
 
 export default function RootLayout({
   children,
